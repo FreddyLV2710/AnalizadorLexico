@@ -10,7 +10,7 @@ public class ControladorAnalizadorLexico {
     public ControladorAnalizadorLexico(frmAnalizadorLexico vista) {
         this.vista = vista;
         
-        vista.btnAnalizar.addActionListener(l);
+        //vista.btnAnalizar.addActionListener(l);
     }
     
     
