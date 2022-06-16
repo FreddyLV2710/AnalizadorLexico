@@ -19,7 +19,7 @@ public class App {
     public static void main(String[] args) {
         frmAnalizadorLexico frame = new frmAnalizadorLexico();
         ControladorAnalizadorLexico controlador = new ControladorAnalizadorLexico(frame);
-        controlador.iniciar();
+        controlador.iniciar();      
     }
     
 }

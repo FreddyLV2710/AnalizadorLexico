@@ -10,7 +10,7 @@ import vista.frmAnalizadorLexico;
 
 public class ControladorAnalizadorLexico {
     private frmAnalizadorLexico vista;
-    private String palabrasReservadas[]={"empezeira","inteira", "fluat", "double", "car", "corriente", "ante", "cuerpinho", 
+    private String palabrasReservadas[]={"empezeira","inteira", "fluat", "double", "car", "corrente", "ante", "cuerpinho", 
         "ats_leitura", "ats_escrever", "se", "senao", "acordo", "caso", "predefinizao", "encuanto", 
         "fazer", "por", "vazio", "retorno", "public", "private", "class","this"};
     private int indice;
@@ -200,14 +200,17 @@ public class ControladorAnalizadorLexico {
                         
                         case 237: dtm1.addRow(new String[]{"237", "Coma", buffer}); break;
                         
-                        case 911: dtm1.addRow(new String[]{"911", "Item no identificado", buffer}); break;
+                        //case 911: dtm1.addRow(new String[]{"911", "Item no identificado", buffer}); break;
 
                         case 1000: dtm1.addRow(new String[]{"1000", "sale 1000", buffer}); break;
                         
-                        
-                        
+                        default:
+                             vista.txtResultado.setText(" finalizo por error ");
+                             vista.txtResultado.setText("ERROR EN LÍNEA "+lines+" del caracter "+cadena.substring(cadena.length()-2,cadena.length()-1));
+                             salir=false;
+                             break;
                     }
-                    
+
                 }while(salir);
                
             }
@@ -242,7 +245,7 @@ public class ControladorAnalizadorLexico {
                         case 3: return 225;// punto
                         case 4: return 5200;//<                      //real return
                         case 5: return 234; //comilla simple    
-                        case 6: return 215; //  
+                        case 6: buffer = buffer.substring(0,1);indice=1 ; return 234;//  
                         case 7: return 5500;                         //caracter return 1000
                         case 8: return 209;                         //divisor return 209
                         case 9: return 217;                         //asignacionDivision return 217
@@ -285,7 +288,7 @@ public class ControladorAnalizadorLexico {
                         case 46: return 206; //+ suma
                         case 47: return 211; //++ incremento
                         case 48: return 214; //+= Asignacion suma
-                        case 49: buffer = buffer.substring(0,1);indice=1;return 235; //" comilla doble
+                        case 49: return 235;//buffer = buffer.substring(0,1);indice=1;return 235; //" comilla doble
                         //case 50: //ct
                         case 51: return 5400; // CADENA
                         case 52: return 236; // | Barra vertical
@@ -321,7 +324,7 @@ public class ControladorAnalizadorLexico {
                                     case '-': estado=40; i++;break;
                                     case '&': estado=44; i++;break;
                                     case '+': estado=46; i++;break;
-                                    case '"': estado=49; i++;break;
+                                    case '\"': estado=49; i++;break;
                                     case '|': estado=52; i++;break;
                                     case '.': estado=53; i++;break;
                                     
@@ -371,8 +374,6 @@ public class ControladorAnalizadorLexico {
                         case 6: if(caracter == '\''){
                                     buffer = buffer + caracter;
                                     estado = 7;
-                                }else{
-                                    return 911;
                                 }
                                 i++;
                                 break;
@@ -444,7 +445,7 @@ public class ControladorAnalizadorLexico {
                                 }else if(Character.isDigit(caracter) || Character.isLetter(caracter)){
                                     buffer = buffer + caracter;
                                     estado = 1;
-                                }else{return 200;}
+                                }else{return 201;}
                                 i++;
                                 break;
                         case 25: if(caracter =='v'){
@@ -569,10 +570,17 @@ public class ControladorAnalizadorLexico {
                         case 48: return 214;
                         case 49: if(caracter=='\"'){
                                 buffer=buffer+caracter;estado=51;
-                                  }else {buffer=buffer+caracter;estado=49;}
+                                  }else {buffer=buffer+caracter;estado=50;} 
                                 i++;
-                                break; 
-                        case 51: return 235;
+                                break;
+                        case 50: if(caracter == '\"'){
+                                    buffer = buffer + caracter; estado = 51;
+                                }else{
+                                    buffer = buffer + caracter; estado = 50;
+                                }
+                                i++;
+                                break;
+                        case 51: return 5400;
                         case 52: return 236;
                         case 53: if(Character.isDigit(caracter)){
                                     buffer = buffer + caracter;
@@ -587,9 +595,7 @@ public class ControladorAnalizadorLexico {
                                     estado = 54;
                                 }else return 5100;
                                 i++;
-                                break;
-                        
-                            
+                                break;                            
                     }
                     indice++;
                 }
