@@ -10,12 +10,13 @@ import vista.frmAnalizadorLexico;
 
 public class ControladorAnalizadorLexico {
     private frmAnalizadorLexico vista;
-    private String palabrasReservadas[]={"empezeira","inteira", "fluat", "double", "car", "Corriente", "ante", "cuerpinho", 
-        "ats_leitura", "ats_escrever", "Se", "senao", "Acordo", "caso", "predefinizao", "Encuanto", 
-        "fazer", "por", "vazio", "retorno", "public", "private", "Class","this"};
+    private String palabrasReservadas[]={"empezeira","inteira", "fluat", "double", "car", "corriente", "ante", "cuerpinho", 
+        "ats_leitura", "ats_escrever", "se", "senao", "acordo", "caso", "predefinizao", "encuanto", 
+        "fazer", "por", "vazio", "retorno", "public", "private", "class","this"};
     private int indice;
     private String cadena;
     private String buffer;
+    
     
     DefaultTableModel dtm1;
     DefaultTableModel dtm2;
@@ -35,16 +36,12 @@ public class ControladorAnalizadorLexico {
         
         this.vista = vista;
         
-
-        
-
-        System.out.println(buscar(cadena));
-
         vista.btnAnalizar.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
                 limpiar();
                 int token;
+                indice = 0;
                 boolean salir = true;
                 cadena="";
                 int lines = vista.txtEntrada.getLineCount();
@@ -65,7 +62,19 @@ public class ControladorAnalizadorLexico {
                     switch(token){
                         case 0: vista.txtResultado.setText("Finalizo el programa "); salir = false;break;
                         
-                        case 4800: dtm1.addRow(new String[]{"","",buffer}); dtm2.addRow(new String[]{"","",buffer});break;
+                        case 4800: dtm1.addRow(new String[]{"4800","id",buffer}); dtm2.addRow(new String[]{"4800","id",buffer});break;
+                        
+                        case 5400: dtm1.addRow(new String[]{"5400", "Cadena", buffer}); break;
+                        
+                        case 3000: dtm1.addRow(new String[]{"3000", "Comentario", buffer}); break;
+                        
+                        case 5500: dtm1.addRow(new String[]{"5500", "Caracter", buffer}); break;
+                        
+                        case 5200: dtm1.addRow(new String[]{"5200", "Real", buffer}); break;
+                        
+                        case 5300: dtm1.addRow(new String[]{"5300", "Entero", buffer}); break;
+                        
+                        case 5100: dtm1.addRow(new String[]{"5100", "Real", buffer}); break;
                         
                         case 120: dtm1.addRow(new String[]{"120", "Pal.Reservada", buffer}); break;
 
@@ -191,6 +200,12 @@ public class ControladorAnalizadorLexico {
                         
                         case 237: dtm1.addRow(new String[]{"237", "Coma", buffer}); break;
                         
+                        case 911: dtm1.addRow(new String[]{"911", "Item no identificado", buffer}); break;
+
+                        case 1000: dtm1.addRow(new String[]{"1000", "sale 1000", buffer}); break;
+                        
+                        
+                        
                     }
                     
                 }while(salir);
@@ -204,9 +219,10 @@ public class ControladorAnalizadorLexico {
     
     
     private int buscar(String x){
-        for (int k = 0; k < 29; k++) 
-            if (x.equals(palabrasReservadas[k])) return 110 + k;
-        return 1000;
+        String auxiliar =x;
+        for (int k = 0; k < 24; k++) 
+            if (auxiliar.equals(palabrasReservadas[k])) return 120 + k;
+        return 4800;
     }
     
     private int scanner(){
@@ -269,9 +285,9 @@ public class ControladorAnalizadorLexico {
                         case 46: return 206; //+ suma
                         case 47: return 211; //++ incremento
                         case 48: return 214; //+= Asignacion suma
-                        case 49: return 235; //" comilla doble
+                        case 49: buffer = buffer.substring(0,1);indice=1;return 235; //" comilla doble
                         //case 50: //ct
-                        case 51: return 666; // CADENA
+                        case 51: return 5400; // CADENA
                         case 52: return 236; // | Barra vertical
                         case 53: return 232; //. Punto
                         case 54: return 666; //REAL INICIADO EN PUNTO
@@ -285,7 +301,8 @@ public class ControladorAnalizadorLexico {
                         case 0: buffer = buffer + caracter;
                             if(Character.isLetter(caracter)){
                                 estado = 1; i++;
-                            }else if(Character.isWhitespace(caracter)==false){
+                            }else if(Character.isDigit(caracter)){  estado=2; i++; }
+                            else if(Character.isWhitespace(caracter)==false){
                                 switch(caracter){
                                     case '\'':estado=5; i++;break;
                                     case '/': estado=8; i++;break;
@@ -486,16 +503,22 @@ public class ControladorAnalizadorLexico {
                         case 37: if(caracter =='*'){
                                     buffer = buffer + caracter;
                                     estado = 38;
-                                }else estado = 37;
+                                }else {
+                                    buffer = buffer + caracter;
+                                    estado = 37;
+                                }
                                 i++;
                                 break;
                         case 38: if(caracter == '$'){
                                     buffer = buffer + caracter;
                                     estado = 39;
-                                }else estado = 37;
+                                }else {
+                                    buffer = buffer + caracter;
+                                    estado = 37;
+                                }
                                 i++;
                                 break;
-                        case 39: return 4900; //COMENTARIO PARRAFO
+                        case 39: return 3000; //COMENTARIO PARRAFO
                         case 40: switch (caracter) {
                                     case '-':
                                         buffer = buffer + caracter;
@@ -534,12 +557,11 @@ public class ControladorAnalizadorLexico {
                         case 47: return 211;
                         case 48: return 214;
                         case 49: if(caracter=='\"'){
-                                   buffer=buffer+caracter;estado=51;
-                                     }else {buffer=buffer+estado;
-                                 estado=49;}
+                                buffer=buffer+caracter;estado=51;
+                                  }else {buffer=buffer+caracter;estado=49;}
                                 i++;
                                 break; 
-                        case 51: return 5400;
+                        case 51: return 235;
                         case 52: return 236;
                         case 53: if(Character.isDigit(caracter)){
                                     buffer = buffer + caracter;
@@ -596,6 +618,7 @@ public class ControladorAnalizadorLexico {
      *Inicializa el frame
      */
     public void iniciar(){
+        this.indice=0;
         vista.setLocationRelativeTo(null);
         vista.setVisible(true);
         vista.setResizable(false);
