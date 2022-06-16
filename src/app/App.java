@@ -4,6 +4,9 @@
  */
 package app;
 
+import controlador.ControladorAnalizadorLexico;
+import vista.frmAnalizadorLexico;
+
 /**
  *
  * @author rodri
@@ -14,7 +17,13 @@ public class App {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        frmAnalizadorLexico frame = new frmAnalizadorLexico();
+        ControladorAnalizadorLexico controlador = new ControladorAnalizadorLexico(frame);
+        controlador.iniciar();
+            int array[] = {1, 2, 3, 4};
+    for (int i = 0; i < array.length; i++) {
+        System.out.print(array[i]);
+    }
     }
     
 }

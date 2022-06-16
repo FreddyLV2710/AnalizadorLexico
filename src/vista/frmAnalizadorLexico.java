@@ -34,7 +34,7 @@ public class frmAnalizadorLexico extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tblSimbolos = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
+        pnlEntrada = new javax.swing.JScrollPane();
         txtEntrada = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -176,7 +176,12 @@ public class frmAnalizadorLexico extends javax.swing.JFrame {
 
         txtEntrada.setColumns(20);
         txtEntrada.setRows(5);
-        jScrollPane3.setViewportView(txtEntrada);
+        txtEntrada.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtEntradaMouseClicked(evt);
+            }
+        });
+        pnlEntrada.setViewportView(txtEntrada);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -200,7 +205,7 @@ public class frmAnalizadorLexico extends javax.swing.JFrame {
                                         .addGap(39, 39, 39))
                                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane3)
+                                .addComponent(pnlEntrada)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnAnalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(25, 25, 25))
@@ -210,11 +215,10 @@ public class frmAnalizadorLexico extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pnlEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btnAnalizar)
                         .addGap(29, 29, 29)))
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -224,7 +228,7 @@ public class frmAnalizadorLexico extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(31, 31, 31)
                 .addComponent(txtResultado, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
 
         pack();
@@ -234,6 +238,10 @@ public class frmAnalizadorLexico extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_btnAnalizarActionPerformed
+
+    private void txtEntradaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtEntradaMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEntradaMouseClicked
 
     /**
      * @param args the command line arguments
@@ -276,10 +284,10 @@ public class frmAnalizadorLexico extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
+    public javax.swing.JScrollPane pnlEntrada;
     public javax.swing.JTable tblReconocimiento;
     public javax.swing.JTable tblSimbolos;
-    private javax.swing.JTextArea txtEntrada;
+    public javax.swing.JTextArea txtEntrada;
     public javax.swing.JTextField txtResultado;
     // End of variables declaration//GEN-END:variables
 }
