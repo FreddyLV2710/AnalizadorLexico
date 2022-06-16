@@ -420,6 +420,8 @@ public class ControladorAnalizadorLexico {
                                     buffer = buffer + caracter;
                                     estado = 20;
                                 }
+                                i++;
+                                break;
                         case 19: return 229;
                         case 20: return 222;
                         case 21: if(caracter == '_'){
@@ -560,6 +562,8 @@ public class ControladorAnalizadorLexico {
                             default:
                                 return 206;
                         }
+                        i++;
+                        break;
 
                         case 47: return 211;
                         case 48: return 214;
