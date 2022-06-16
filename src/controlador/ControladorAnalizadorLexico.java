@@ -74,7 +74,7 @@ public class ControladorAnalizadorLexico {
                         
                         case 5300: dtm1.addRow(new String[]{"5300", "Entero", buffer}); break;
                         
-                        case 5100: dtm1.addRow(new String[]{"5100", "Real", buffer}); break;
+                        case 5100: dtm1.addRow(new String[]{"5200", "Real", "0"+buffer}); break;
                         
                         case 120: dtm1.addRow(new String[]{"120", "Pal.Reservada", buffer}); break;
 
@@ -290,7 +290,7 @@ public class ControladorAnalizadorLexico {
                         case 51: return 5400; // CADENA
                         case 52: return 236; // | Barra vertical
                         case 53: return 232; //. Punto
-                        case 54: return 666; //REAL INICIADO EN PUNTO
+                        case 54: return 5100; //REAL INICIADO EN PUNTO
                         
   
                         default: return 911;
@@ -299,7 +299,7 @@ public class ControladorAnalizadorLexico {
                     buffer = buffer.trim();
                     switch(estado){
                         case 0: buffer = buffer + caracter;
-                            if(Character.isLetter(caracter)){
+                            if(Character.isLetter(caracter) && caracter!='v'){
                                 estado = 1; i++;
                             }else if(Character.isDigit(caracter)){  estado=2; i++; }
                             else if(Character.isWhitespace(caracter)==false){
@@ -324,6 +324,7 @@ public class ControladorAnalizadorLexico {
                                     case '"': estado=49; i++;break;
                                     case '|': estado=52; i++;break;
                                     case '.': estado=53; i++;break;
+                                    
                                     default: return 911;
                                 }
                             }else estado = 0;
@@ -441,7 +442,7 @@ public class ControladorAnalizadorLexico {
                                 }else if(Character.isDigit(caracter) || Character.isLetter(caracter)){
                                     buffer = buffer + caracter;
                                     estado = 2;
-                                }
+                                }else{return 200;}
                                 i++;
                                 break;
                         case 25: if(caracter =='v'){
