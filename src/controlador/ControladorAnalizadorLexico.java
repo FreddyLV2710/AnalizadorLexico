@@ -10,9 +10,9 @@ import vista.frmAnalizadorLexico;
 
 public class ControladorAnalizadorLexico {
     private frmAnalizadorLexico vista;
-    private String palabrasReservadas[]={"INICIOCONS","VFIN","FINCONS","ENTERO","REAL","LOG","KDENA","KRACTER",
-        "read","write","yes","yesnt","consiguiente","recorrer","Loprincipal","INICIO","FIN","true","false","retornar","resumen","clase",
-        "BUILD","Crear","declase","call","resi","and","or"};
+    private String palabrasReservadas[]={"empezeira","inteira", "fluat", "double", "car", "Corriente", "ante", "cuerpinho", 
+        "ats_leitura", "ats_escrever", "Se", "senao", "Acordo", "caso", "predefinizao", "Encuanto", 
+        "fazer", "por", "vazio", "retorno", "public", "private", "Class","this"};
     private int indice;
     private String cadena;
     private String buffer;
@@ -43,7 +43,8 @@ public class ControladorAnalizadorLexico {
         vista.btnAnalizar.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                int t;
+                limpiar();
+                int token;
                 boolean salir = true;
                 cadena="";
                 int lines = vista.txtEntrada.getLineCount();
@@ -55,10 +56,144 @@ public class ControladorAnalizadorLexico {
                         cadena = cadena.concat(vista.txtEntrada.getText(start, end-start)).trim();
                     }
                 } catch (BadLocationException ex) {
-                    System.out.println("Error al concatenar");
+                    System.err.println("Error al concatenar");
                 }
                 cadena = cadena + '@';
                 int r = 0, i = 0,lineaError;
+                do{
+                    token = scanner();
+                    switch(token){
+                        case 0: vista.txtResultado.setText("Finalizo el programa "); salir = false;break;
+                        
+                        case 4800: dtm1.addRow(new String[]{"","",buffer}); dtm2.addRow(new String[]{"","",buffer});break;
+                        
+                        case 120: dtm1.addRow(new String[]{"120", "Pal.Reservada", buffer}); break;
+
+                        case 121: dtm1.addRow(new String[]{"121", "Pal.Reservada", buffer}); break;
+
+                        case 122: dtm1.addRow(new String[]{"122", "Pal.Reservada", buffer}); break;
+
+                        case 123: dtm1.addRow(new String[]{"123", "Pal.Reservada", buffer}); break;
+
+                        case 124: dtm1.addRow(new String[]{"124", "Pal.Reservada", buffer}); break;
+
+                        case 125: dtm1.addRow(new String[]{"125", "Pal.Reservada", buffer}); break;
+
+                        case 126: dtm1.addRow(new String[]{"126", "Pal.Reservada", buffer}); break;
+
+                        case 127: dtm1.addRow(new String[]{"127", "Pal.Reservada", buffer}); break;
+
+                        case 128: dtm1.addRow(new String[]{"128", "Pal.Reservada", buffer}); break;
+
+                        case 129: dtm1.addRow(new String[]{"129", "Pal.Reservada", buffer}); break;  
+
+                        case 130: dtm1.addRow(new String[]{"130", "Pal.Reservada", buffer}); break;
+
+                        case 131: dtm1.addRow(new String[]{"131", "Pal.Reservada", buffer}); break;
+
+                        case 132: dtm1.addRow(new String[]{"132", "Pal.Reservada", buffer}); break;
+
+                        case 133: dtm1.addRow(new String[]{"133", "Pal.Reservada", buffer}); break;
+
+                        case 134: dtm1.addRow(new String[]{"134", "Pal.Reservada", buffer}); break;
+
+                        case 135: dtm1.addRow(new String[]{"135", "Pal.Reservada", buffer}); break;
+
+                        case 136: dtm1.addRow(new String[]{"136", "Pal.Reservada", buffer}); break;
+
+                        case 137: dtm1.addRow(new String[]{"137", "Pal.Reservada", buffer}); break;
+
+                        case 138: dtm1.addRow(new String[]{"138", "Pal.Reservada", buffer}); break;
+
+                        case 139: dtm1.addRow(new String[]{"139", "Pal.Reservada", buffer}); break;   
+
+                        case 140: dtm1.addRow(new String[]{"140", "Pal.Reservada", buffer}); break;
+
+                        case 141: dtm1.addRow(new String[]{"141", "Pal.Reservada", buffer}); break;
+
+                        case 142: dtm1.addRow(new String[]{"142", "Pal.Reservada", buffer}); break;
+
+                        case 143: dtm1.addRow(new String[]{"143", "Pal.Reservada", buffer}); break; 
+                        
+                        case 200: dtm1.addRow(new String[]{"200", "AND Logico", buffer}); break;
+                        
+                        case 201: dtm1.addRow(new String[]{"201", "OR Logico", buffer}); break;
+                        
+                        case 202: dtm1.addRow(new String[]{"202", "AND Condicio.", buffer}); break;
+                        
+                        case 203: dtm1.addRow(new String[]{"203", "OR Condicio.", buffer}); break;
+                        
+                        case 204: dtm1.addRow(new String[]{"204", "XOR Condicio.", buffer}); break;
+                        
+                        case 205: dtm1.addRow(new String[]{"205", "Negacion", buffer}); break;
+                        
+                        case 206: dtm1.addRow(new String[]{"206", "Sumatoria", buffer}); break;
+                        
+                        case 207: dtm1.addRow(new String[]{"207", "Resta", buffer}); break;
+                        
+                        case 208: dtm1.addRow(new String[]{"208", "Multiplicacion", buffer}); break;
+                        
+                        case 209: dtm1.addRow(new String[]{"209", "Division", buffer}); break;
+                        
+                        case 210: dtm1.addRow(new String[]{"210", "Modulo", buffer}); break;
+                        
+                        case 211: dtm1.addRow(new String[]{"211", "Incremento", buffer}); break;
+                        
+                        case 212: dtm1.addRow(new String[]{"212", "Decremento", buffer}); break;
+                        
+                        case 213: dtm1.addRow(new String[]{"213", "Asignacion", buffer}); break;
+                        
+                        case 214: dtm1.addRow(new String[]{"214", "Asignacion Sum.", buffer}); break;
+                        
+                        case 215: dtm1.addRow(new String[]{"215", "Asignacion Res.", buffer}); break;
+                        
+                        case 216: dtm1.addRow(new String[]{"216", "Asignacion Mult.", buffer}); break;
+                        
+                        case 217: dtm1.addRow(new String[]{"217", "Asignacino Div.", buffer}); break;
+                        
+                        case 218: dtm1.addRow(new String[]{"218", "Asignacion Mod.", buffer}); break;
+                        
+                        case 219: dtm1.addRow(new String[]{"219", "Igualdad", buffer}); break;
+                        
+                        case 220: dtm1.addRow(new String[]{"220", "Diferente", buffer}); break;
+                        
+                        case 221: dtm1.addRow(new String[]{"221", "Oper. Menor", buffer}); break;
+                        
+                        case 222: dtm1.addRow(new String[]{"222", "Oper. Menor igual", buffer}); break;
+                        
+                        case 223: dtm1.addRow(new String[]{"223", "Oper. Mayor", buffer}); break;
+                        
+                        case 224: dtm1.addRow(new String[]{"224", "Oper. Mayor igual", buffer}); break;
+                        
+                        case 225: dtm1.addRow(new String[]{"225", "Oper. Limitante", buffer}); break;
+                        
+                        case 226: dtm1.addRow(new String[]{"226", "Oper. Limitante", buffer}); break;
+                        
+                        case 227: dtm1.addRow(new String[]{"227", "Oper. Limitante", buffer}); break;
+                        
+                        case 228: dtm1.addRow(new String[]{"228", "Oper. Limitante", buffer}); break;
+                        
+                        case 229: dtm1.addRow(new String[]{"229", "Oper. Limitante", buffer}); break;
+                        
+                        case 230: dtm1.addRow(new String[]{"230", "Oper. Limitante", buffer}); break;
+                        
+                        case 231: dtm1.addRow(new String[]{"231", "Oper. Coment.", buffer}); break;
+                        
+                        case 232: dtm1.addRow(new String[]{"232", "Punto", buffer}); break;
+                        
+                        case 233: dtm1.addRow(new String[]{"233", "Punto y Coma", buffer}); break;
+                        
+                        case 234: dtm1.addRow(new String[]{"234", "Comilla", buffer}); break;
+                        
+                        case 235: dtm1.addRow(new String[]{"235", "Doble comilla", buffer}); break;
+                        
+                        case 236: dtm1.addRow(new String[]{"236", "Barra Vertical", buffer}); break;
+                        
+                        case 237: dtm1.addRow(new String[]{"237", "Coma", buffer}); break;
+                        
+                    }
+                    
+                }while(salir);
                
             }
         
@@ -437,7 +572,7 @@ public class ControladorAnalizadorLexico {
            
     }
     
-    private void indice_tabla1(){   
+    private void indice_tabla(){   
         String [] titulo = new String []{"Tokem", "Descripcion", "Lexema"};  
         
         dtm1.setColumnIdentifiers(titulo); //Asigna los valores a la tabla
@@ -465,8 +600,11 @@ public class ControladorAnalizadorLexico {
         vista.setVisible(true);
         vista.setResizable(false);
         vista.setTitle("Analizador Lexico");
+        indice_tabla();
         
     }
+
+
 
 
 }

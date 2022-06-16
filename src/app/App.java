@@ -20,10 +20,6 @@ public class App {
         frmAnalizadorLexico frame = new frmAnalizadorLexico();
         ControladorAnalizadorLexico controlador = new ControladorAnalizadorLexico(frame);
         controlador.iniciar();
-            int array[] = {1, 2, 3, 4};
-    for (int i = 0; i < array.length; i++) {
-        System.out.print(array[i]);
-    }
     }
     
 }
