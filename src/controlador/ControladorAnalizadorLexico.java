@@ -235,7 +235,7 @@ public class ControladorAnalizadorLexico {
             if(caracter=='@'&&i==0){
                 return 0;
             }else {
-                if(caracter=='@' && validar()){
+                if(caracter=='@' /*&& validar()*/){
                     switch(estado){
                         case 1: return buscar(buffer);  // identificador                         
                         case 2: return 5300; // operador >           //entero return
@@ -273,7 +273,7 @@ public class ControladorAnalizadorLexico {
                         case 34: return 911;
                         case 35: return 231;// Entrada comentario
                         case 36: return 227;//Entrada comentario de parrafo
-                        case 37: return 911;
+                        case 37: buffer=buffer.substring(0,2);indice=2;return 227;
                         case 38: return 911;
                         case 39: return 3000;//COMENTARIO
                         case 40: return 207; //- resta
@@ -329,7 +329,7 @@ public class ControladorAnalizadorLexico {
                                 }
                             }else estado = 0;
                         break;
-                        case 1: if((Character.isDigit(caracter)) || (Character.isLetter(caracter)) ){
+                        case 1: if((Character.isDigit(caracter)) || (Character.isLetter(caracter)|| caracter=='_') ){
                                     buffer = buffer + caracter;
                                     estado = 1;
                                 }else{return buscar(buffer);}
@@ -441,7 +441,7 @@ public class ControladorAnalizadorLexico {
                                     estado = 25;
                                 }else if(Character.isDigit(caracter) || Character.isLetter(caracter)){
                                     buffer = buffer + caracter;
-                                    estado = 2;
+                                    estado = 1;
                                 }else{return 200;}
                                 i++;
                                 break;
@@ -548,13 +548,19 @@ public class ControladorAnalizadorLexico {
                                 i++;
                                 break;
                         case 45: return 218;
-                        case 46: if(caracter == '+'){
-                                    buffer = buffer + caracter;
-                                    estado = 47;
-                                }else if(caracter == '='){
-                                    buffer = buffer + caracter;
-                                    estado = 48;
-                                }else return 206;
+                        case 46: switch (caracter) {
+                            case '+':
+                                buffer = buffer + caracter;
+                                estado = 47;
+                                break;
+                            case '=':
+                                buffer = buffer + caracter;
+                                estado = 48;
+                                break;
+                            default:
+                                return 206;
+                        }
+
                         case 47: return 211;
                         case 48: return 214;
                         case 49: if(caracter=='\"'){
@@ -567,6 +573,8 @@ public class ControladorAnalizadorLexico {
                         case 53: if(Character.isDigit(caracter)){
                                     buffer = buffer + caracter;
                                     estado = 54;
+                                }else{
+                                    return 232;
                                 }
                                 i++;
                                 break;
