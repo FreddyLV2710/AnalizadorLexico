@@ -174,19 +174,19 @@ public class ControladorAnalizadorLexico {
                         
                         case 224: dtm1.addRow(new String[]{"224", "Oper. Mayor igual", buffer}); break;
                         
-                        case 225: dtm1.addRow(new String[]{"225", "Oper. Limitante", buffer}); break;
+                        case 225: dtm1.addRow(new String[]{"225", "Parentesis izquierdo", buffer}); break;
                         
-                        case 226: dtm1.addRow(new String[]{"226", "Oper. Limitante", buffer}); break;
+                        case 226: dtm1.addRow(new String[]{"226", "Parentesis derecho", buffer}); break;
                         
-                        case 227: dtm1.addRow(new String[]{"227", "Oper. Limitante", buffer}); break;
+                        case 227: dtm1.addRow(new String[]{"227", "Entrada parr. comentario", buffer}); break;
                         
-                        case 228: dtm1.addRow(new String[]{"228", "Oper. Limitante", buffer}); break;
+                        case 228: dtm1.addRow(new String[]{"228", "Llave abierta", buffer}); break;
                         
-                        case 229: dtm1.addRow(new String[]{"229", "Oper. Limitante", buffer}); break;
+                        case 229: dtm1.addRow(new String[]{"229", "Lave cerrada", buffer}); break;
                         
-                        case 230: dtm1.addRow(new String[]{"230", "Oper. Limitante", buffer}); break;
+                        case 230: dtm1.addRow(new String[]{"230", "Cierre parr. comentario", buffer}); break;
                         
-                        case 231: dtm1.addRow(new String[]{"231", "Oper. Coment.", buffer}); break;
+                        case 231: dtm1.addRow(new String[]{"231", "Entrada linea comentario ", buffer}); break;
                         
                         case 232: dtm1.addRow(new String[]{"232", "Punto", buffer}); break;
                         
@@ -242,7 +242,7 @@ public class ControladorAnalizadorLexico {
                     switch(estado){
                         case 1: return buscar(buffer);  // identificador                         
                         case 2: return 5300; // operador >           //entero return
-                        case 3: return 225;// punto
+                        case 3: return 5300;// punto
                         case 4: return 5200;//<                      //real return
                         case 5: return 234; //comilla simple    
                         case 6: buffer = buffer.substring(0,1);indice=1 ; return 234;//  
@@ -289,7 +289,7 @@ public class ControladorAnalizadorLexico {
                         case 47: return 211; //++ incremento
                         case 48: return 214; //+= Asignacion suma
                         case 49: return 235;//buffer = buffer.substring(0,1);indice=1;return 235; //" comilla doble
-                        //case 50: //ct
+                        case 50: buffer = buffer.substring(0,1);indice=1 ; return 235;
                         case 51: return 5400; // CADENA
                         case 52: return 236; // | Barra vertical
                         case 53: return 232; //. Punto
@@ -352,7 +352,8 @@ public class ControladorAnalizadorLexico {
 
                                 }else{
                                     buffer=buffer.substring(0,buffer.length()-1);indice++;
-                                    return 5300;
+                                    System.out.println(buffer);
+                                    return 5200;
                                 }
                                 i++;
                                 break;
